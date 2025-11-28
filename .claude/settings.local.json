@@ -11,7 +11,10 @@
       "mcp__serena__onboarding",
       "mcp__serena__list_dir",
       "mcp__serena__get_symbols_overview",
-      "mcp__serena__write_memory"
+      "mcp__serena__write_memory",
+      "Bash(make:*)",
+      "Bash(chmod:*)",
+      "Bash(python /Users/speterson/src/world-anvil/scripts/md_to_rst.py:*)"
     ],
     "deny": [],
     "ask": []

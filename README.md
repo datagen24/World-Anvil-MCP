@@ -77,13 +77,15 @@ Add to your MCP settings:
 
 ## Project Status
 
-🚧 **In Development** - Phase 1 (Core Infrastructure)
+🚧 In Development — Phase 0.4 (Early Implementation)
 
-See [Design Specification](claudedocs/DESIGN_SPECIFICATION.md) for roadmap.
+- Architecture and specifications drafted; initial server scaffolding in place.
+- Quality gates configured (ruff, mypy, pytest); tests being added.
+- See `docs/PHASE_0_STATUS.md` for detailed phase tracking and milestones.
 
 ## License
 
-MIT License - See LICENSE file for details
+BSD 3-Clause License — See LICENSE file for details
 
 ## Resources
 
