@@ -1,0 +1,214 @@
+openapi: "3.0.3"
+info:
+  title: World Anvil Public API Documentation
+  version: 2.0.0 - Boromir
+  contact:
+    name: World Anvil Team
+    email: contact@worldanvil.com
+    url: 'https://www.worldanvil.com'
+  license:
+    name: 'API License'
+    url: 'https://www.worldanvil.com/api/external/boromir/documentation#licence-section'
+  description: |-
+    Welcome to the World Anvil Public API Documentation. This API provides developers and World Anvil users with programmatic access to the extensive features of the World Anvil worldbuilding platform.
+    Whether you're building integrations, automating tasks, or creating custom experiences, this API empowers you to interact with your worldbuilding data seamlessly.
+servers:
+  - url: 'https://www.worldanvil.com/api/external/boromir'
+    description: Boromir Main Server
+    variables: {}
+paths:
+  /article:
+    $ref: 'parts/article/article.yml#/article'
+  /world/articles:
+    $ref: 'parts/article/world-articles.yml#/world-articles'
+  /block:
+    $ref: 'parts/block/block.yml#/block'
+  /blockfolder/blocks:
+    $ref: 'parts/block/blockfolder-blocks.yml#/blockfolder-blocks'
+  /blockfolder:
+    $ref: 'parts/block/blockfolder.yml#/blockfolder'
+  /world/blockfolders:
+    $ref: 'parts/block/world-blockfolders.yml#/world-blockfolders'
+  /blocktemplate:
+    $ref: 'parts/blocktemplate/blocktemplate.yml#/blocktemplate'
+  /user/blocktemplates:
+    $ref: 'parts/blocktemplate/user-blocktemplates.yml#/user-blocktemplates'
+  /blocktemplatepart:
+    $ref: 'parts/blocktemplate/blocktemplatepart.yml#/blocktemplatepart'
+  /blocktemplate/blocktemplateparts:
+    $ref: 'parts/blocktemplate/blocktemplate-blocktemplateparts.yml#/blocktemplate-blocktemplateparts'
+  /category:
+    $ref: 'parts/category/category.yml#/category'
+  /world/categories:
+    $ref: 'parts/category/world-categories.yml#/world-categories'
+  /canvas:
+    $ref: 'parts/canvas/canvas.yml#/canvas'
+  /world/canvases:
+    $ref: 'parts/canvas/world-canvases.yml#/world-canvases'
+  # /chronicle:
+  #   $ref: 'parts/timeline/chronicle.yml#/chronicle'
+  # /world/chronicles:
+  #   $ref: 'parts/timeline/world-chronicles.yml#/world-chronicles'
+  /rpgsystem:
+    $ref: 'parts/rpgsystem/rpgsystem.yml#/rpgsystem'
+  /rpgsystems:
+    $ref: 'parts/rpgsystem/rpgsystems.yml#/rpgsystems'
+  /timeline:
+    $ref: 'parts/timeline/timeline.yml#/timeline'
+  /world/timelines:
+    $ref: 'parts/timeline/world-timelines.yml#/world-timelines'
+  /history:
+    $ref: 'parts/timeline/history.yml#/history'
+  /world/histories:
+    $ref: 'parts/timeline/world-histories.yml#/world-histories'
+  /image:
+    $ref: 'parts/image/image.yml#/image'
+  /world/images:
+    $ref: 'parts/image/world-images.yml#/world-images'
+  /map:
+    $ref: 'parts/map/map.yml#/map'
+  /world/maps:
+    $ref: 'parts/map/world-maps.yml#/world-maps'
+  /layer:
+    $ref: 'parts/map/layer.yml#/layer'
+  /map/layers:
+    $ref: 'parts/map/map-layers.yml#/map-layers'
+  /markergroup:
+    $ref: 'parts/map/markergroup.yml#/markergroup'
+  /map/markergroups:
+    $ref: 'parts/map/map-markergroups.yml#/map-markergroups'
+  /marker:
+    $ref: 'parts/map/marker.yml#/marker'
+  /map/markers:
+    $ref: 'parts/map/map-markers.yml#/map-markers'
+  /markergroup/markers:
+    $ref: 'parts/map/markergroup-markers.yml#/markergroup-markers'
+  /markertype:
+    $ref: 'parts/markertype/markertype.yml#/markertype'
+  /markertypes:
+    $ref: 'parts/markertype/markertypes.yml#/markertypes'
+  /manuscript:
+    $ref: 'parts/manuscript/manuscript.yml#/manuscript'
+  /world/manuscripts:
+    $ref: 'parts/manuscript/world-manuscripts.yml#/world-manuscripts'
+  /manuscript_beat:
+    $ref: 'parts/manuscript/manuscript-beat.yml#/manuscript-beat'
+  /manuscript_part/manuscript_beats:
+    $ref: 'parts/manuscript/manuscript-beats-by-manuscript-parts.yml#/manuscript-beats-by-manuscript-parts'
+  /manuscript_bookmark:
+    $ref: 'parts/manuscript/manuscript-bookmark.yml#/manuscript-bookmark'
+  /manuscript/manuscript_bookmarks:
+    $ref: 'parts/manuscript/manuscript-bookmarks-by-manuscript.yml#/manuscript-bookmarks-by-manuscript'
+  /manuscript_part:
+    $ref: 'parts/manuscript/manuscript-part.yml#/manuscript-part'
+  /manuscript_version/manuscript_parts:
+    $ref: 'parts/manuscript/manuscript-parts-by-manuscript-version.yml#/manuscript-parts-by-manuscript-version'
+  /manuscript_version:
+    $ref: 'parts/manuscript/manuscript-version.yml#/manuscript-version'
+  /manuscript/manuscript_versions:
+    $ref: 'parts/manuscript/manuscript-versions-by-manuscript.yml#/manuscript-versions-by-manuscript'
+  /manuscript_tag:
+    $ref: 'parts/manuscript/manuscript-tag.yml#/manuscript-tag'
+  /manuscript/manuscript_tags:
+    $ref: 'parts/manuscript/manuscript-tags-by-manuscript.yml#/manuscript-tags-by-manuscript'
+  /manuscript_stat:
+    $ref: 'parts/manuscript/manuscript-stat.yml#/manuscript-stat'
+  /manuscript_version/manuscript_stats:
+    $ref: 'parts/manuscript/manuscript-stats-by manuscipt-version.yml#/manuscript-stats-by manuscipt-version'
+  /manuscript_label:
+    $ref: 'parts/manuscript/manuscript-label.yml#/manuscript-label'
+  /manuscript/manuscript_labels:
+    $ref: 'parts/manuscript/manuscript-labels-by-manuscript.yml#/manuscript-labels-by-manuscript'
+  /manuscript_plot:
+    $ref: 'parts/manuscript/manuscript-plot.yml#/manuscript-plot'
+  /manuscript_version/manuscript_plots:
+    $ref: 'parts/manuscript/manuscript-plots-by-manuscript-version.yml#/manuscript-plots-by-manuscript-version'
+  /notebook:
+    $ref: 'parts/notebook/notebook.yml#/notebook'
+  /world/notebooks:
+    $ref: 'parts/notebook/world-notebooks.yml#/world-notebooks'
+  /notesection:
+    $ref: 'parts/notebook/notesection.yml#/notesection'
+  /notebook/notesections:
+    $ref: 'parts/notebook/notebook-notesections.yml#/notebook-notesections'
+  /note:
+    $ref: 'parts/notebook/note.yml#/note'
+  /notesection/notes:
+    $ref: 'parts/notebook/notesection-notes.yml#/notesection-notes'
+  /secret:
+    $ref: 'parts/secret/secret.yml#/secret'
+  /world/secrets:
+    $ref: 'parts/secret/world-secrets.yml#/world-secrets'
+  /subscribergroup:
+    $ref: 'parts/subscribergroup/subscribergroup.yml#/subscribergroup'
+  /world/subscribergroups:
+    $ref: 'parts/subscribergroup/world-subscribergroups.yml#/world-subscribergroups'
+  /variable:
+    $ref: 'parts/variable/variable.yml#/variable'
+  /variable_collection/variables:
+    $ref: 'parts/variable/variables-by-variable-collection.yml#/variables-by-variable-collection'
+  /variable_collection:
+    $ref: 'parts/variable/variable-collection.yml#/variable-collection'
+  /world/variablecollections:
+    $ref: 'parts/variable/world-variablecollections.yml#/world-variablecollections'
+  /user:
+    $ref: 'parts/user/user.yml#/user'
+  /identity:
+    $ref: 'parts/user/user-identity.yml#/identity'
+  /world:
+    $ref: 'parts/world/world.yml#/world'
+  /user/worlds:
+    $ref: 'parts/world/user-worlds.yml#/user-worlds'
+tags:
+  - name: Article
+  - name: Block
+  - name: Block Folder
+  - name: Block Template
+  - name: Block Template Part
+  - name: Category
+  - name: Canvas
+  # - name: Chronicle
+  - name: RPG System
+  - name: Timeline
+  - name: History
+  - name: Image
+  - name: Map
+  - name: Map Layer
+  - name: Marker Group
+  - name: Marker
+  - name: Marker Type (Pin)
+  - name: Manuscript
+  - name: Manuscript Beat
+  - name: Manuscript Bookmark
+  - name: Manuscript Part
+  - name: Manuscript Version
+  - name: Manuscript Tag
+  - name: Manuscript Stat
+  - name: Manuscript Label
+  - name: Manuscript Plot
+  - name: Notebook
+  - name: Notesection
+  - name: Note
+  - name: Secret
+  - name: Subscribergroup
+  - name: Variable
+  - name: Variable Collection
+  - name: User
+  - name: World
+security:
+  - User Authentication Token: []
+  - Application Key: []
+components:
+  links: {}
+  callbacks: {}
+  schemas: {}
+  securitySchemes:
+    Application Key:
+      type: apiKey
+      name: x-application-key
+      in: header
+    User Authentication Token:
+      type: apiKey
+      name: x-auth-token
+      in: header
+  responses: {}
