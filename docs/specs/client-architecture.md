@@ -602,7 +602,7 @@ class BaseEndpoint(Generic[T]):
 
         Args:
             resource_id: Resource identifier
-            granularity: Detail level (0-2)
+            granularity: Detail level (string: -1,0,1,2,3; default "1")
             model_class: Pydantic model for validation
 
         Returns:

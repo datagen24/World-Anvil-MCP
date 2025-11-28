@@ -31,8 +31,8 @@ Build an MCP (Model Context Protocol) server that bridges Claude Code with World
 - **Language**: Python 3.11+
 - **Framework**: FastMCP (MCP Python SDK)
 - **API Client**: Custom wrapper around World Anvil Boromir API v2
-- **Transport**: stdio (default), streamable-http (optional for OAuth)
-- **Authentication**: API key-based (user tokens)
+- **Transport**: stdio
+- **Authentication**: Header-based (`x-application-key`, `x-auth-token`)
 
 ---
 
@@ -127,11 +127,11 @@ x-auth-token: <user_authentication_token>
 
 **Content Type**: `application/json` for all requests/responses
 
-### Core Endpoints (Based on OpenAPI 3.0.3 Spec)
+### Core Endpoints (From openapi.yml)
 
 #### World & User
 ```
-GET    /world                   # Get world details
+GET    /world                   # World details (id via query param)
 GET    /user/worlds             # List user's worlds
 GET    /user                    # Get current user info
 GET    /identity                # Get user identity
@@ -139,8 +139,8 @@ GET    /identity                # Get user identity
 
 #### Articles & Content
 ```
-GET    /article                 # Get article
-GET    /world/articles          # List articles in world
+GET    /article                 # Article details (id via query param)
+POST   /world/articles          # List articles in world (pagination)
 ```
 
 #### Blocks & Templates
@@ -247,28 +247,34 @@ GET    /variable_collection     # Get variable collection
 GET    /world/variablecollections      # List collections
 ```
 
-**Note**: The OpenAPI spec includes references to `parts/` directory files with detailed schemas for each endpoint. Write/Update/Delete operations may be available but are not fully detailed in the main spec file.
+Notes:
+- The OpenAPI file references `parts/` documents for detailed schemas and methods; these are not included locally.
+- Core base endpoints (e.g., `article`, `world`, `category`) support CRUD via PUT (create), PATCH (update), DELETE (delete), with identifiers passed as query parameters (per pywaclient and WA docs).
+- World-scoped listing endpoints (e.g., `/world/articles`) commonly use POST with a JSON body for pagination (`limit`, `offset`) and filters.
 
 ### Granularity Levels
 
-All GET endpoints support `?granularity=<level>`:
+Most GET operations accept `granularity` as a STRING query parameter:
 
-- **0**: Minimum display object (preview/choice data)
-- **1**: Principal display object (standard display)
-- **2**: Detailed object (full data with relationships)
+- -1: Reference-only (ids/titles)
+- 0: Preview/minimal
+- 1: Standard/principal (default)
+- 2: Detailed/extended (includes content/relationships for articles)
+- 3: Special (rare)
+
+Always pass `granularity` as a string (e.g., "1"). Include the level in cache keys.
 
 ### Rate Limiting
 
-- Expected limits apply (check API documentation)
-- Implement exponential backoff for 429 responses
-- Cache responses aggressively to minimize API calls
+- Respect API limits; use token-bucket or semaphore-based limiter
+- Exponential backoff on 429 and retryable 5xx (honor Retry-After)
+- Prefer lower granularity for lists; cache aggressively
 
 ### API Constraints
 
-- **Read-Only Focus**: Current public API is primarily read-focused
-- **Write Endpoints**: Limited write capabilities (check current API status)
-- **Guild Requirement**: Grandmaster rank required for application key
-- **User Tokens**: Guild member required for user API tokens
+- Write support: Core resources support CRUD (PUT/PATCH/DELETE) via base endpoints with `id` query param. Not all resource types expose writes; confirm per endpoint.
+- Guild requirement: Grandmaster rank required for application key
+- User tokens: Guild member required for user API tokens
 
 ---
 
@@ -323,7 +329,7 @@ async def get_article(
     Args:
         world_id: World containing the article
         article_id: Article identifier
-        granularity: Detail level (0=preview, 1=standard, 2=detailed)
+        granularity: Detail level ("0"=preview, "1"=standard, "2"=detailed)
 
     Returns:
         Article content and metadata
@@ -411,7 +417,7 @@ async def get_world(
 
     Args:
         world_id: World identifier
-        granularity: Detail level (0=preview, 1=standard, 2=detailed)
+        granularity: Detail level ("0"=preview, "1"=standard, "2"=detailed)
 
     Returns:
         World details including settings and statistics
@@ -896,12 +902,11 @@ async def authenticate(api_token: str) -> dict[str, str]:
 
 ### Request Authentication
 
-All API requests include these headers:
+All API requests include these headers (add `Content-Type: application/json` only for requests with a JSON body):
 ```python
 headers = {
     "x-application-key": APPLICATION_KEY,
     "x-auth-token": USER_API_TOKEN,
-    "Content-Type": "application/json",
     "Accept": "application/json"
 }
 ```
@@ -1222,7 +1227,8 @@ class WorldAnvilClient:
     @retry(stop=stop_after_attempt(3), wait=wait_exponential())
     async def get(self, endpoint: str, params: dict | None = None) -> dict:
         """Make GET request with caching and retry."""
-        cache_key = f"{endpoint}:{params}"
+        import json
+        cache_key = f"{endpoint}:{json.dumps(params or {}, sort_keys=True)}"
 
         # Check cache first
         if cached := self.cache.get(cache_key):
@@ -1245,22 +1251,33 @@ class WorldAnvilClient:
     # Specific endpoint methods
     async def get_world(self, world_id: str, granularity: int = 1) -> World:
         """Get world details."""
-        data = await self.get(f"/world/{world_id}", {"granularity": granularity})
+        params = {"id": world_id, "granularity": str(granularity)}
+        data = await self.get("/world", params)
         return World.model_validate(data)
 
     async def list_articles(
         self,
         world_id: str,
         category_id: str | None = None,
-        limit: int = 20
+        limit: int = 20,
+        offset: int = 0
     ) -> list[Article]:
-        """List articles in world."""
-        params = {"limit": limit}
+        """List articles in a world (paginated)."""
+        params = {"id": world_id}
+        body: dict = {"limit": limit, "offset": offset}
         if category_id:
-            params["categoryId"] = category_id
+            body["category"] = {"id": category_id}
 
-        data = await self.get(f"/world/{world_id}/articles", params)
-        return [Article.model_validate(item) for item in data]
+        # World-scoped lists use POST
+        response = await self.client.post(
+            f"{self.base_url}/world/articles",
+            params=params,
+            json=body
+        )
+        response.raise_for_status()
+        payload = response.json()
+        items = payload.get("entities", [])
+        return [Article.model_validate(item) for item in items]
 
     # ... more methods
 ```
@@ -1310,6 +1327,10 @@ async def get_article(world_id: str, article_id: str, ctx: Context) -> dict:
         await ctx.error(f"World Anvil API error: {str(e)}")
         raise
 ```
+
+Additional considerations:
+- Some endpoints return HTTP 200 with `{"success": false, "error": "..."}`; treat these as failures and map to typed exceptions.
+- Do not retry on 4xx (except 429). Retry on 5xx and connection errors with jittered backoff.
 
 ### Testing Strategy
 
@@ -1527,7 +1548,7 @@ Based on OpenAPI 3.0.3 specification (openapi.yml)
 | Endpoint | Description | Notes |
 |----------|-------------|-------|
 | `/article` | Get article | Core content type |
-| `/world/articles` | List articles in world | Filterable |
+| `/world/articles` | List articles in world | POST + pagination |
 | `/category` | Get category | Organization |
 | `/world/categories` | List categories | Hierarchical |
 | `/block` | Get content block | Reusable content |

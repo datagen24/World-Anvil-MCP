@@ -130,7 +130,7 @@ Create well-developed NPCs with consistent details, motivations, and connections
 3. Add to Digital Storyteller Screen
 
 **MCP Tools**:
-- `create_campaign_npc` - Add to campaign (future write API)
+- `create_campaign_npc` - Add to campaign (requires confirmed write endpoint)
 - `link_npc_to_article` - Connect to article (future)
 
 ---
@@ -143,7 +143,7 @@ Create well-developed NPCs with consistent details, motivations, and connections
 | `get_article` | Read | 1 | Core |
 | `list_articles` | Read | 1 | Core |
 | `get_world` | Read | 1 | Core |
-| `create_article` | Write | Future | Critical |
+| `create_article` | Write | 1-2 | Critical |
 | `create_campaign_npc` | Write | Future | High |
 
 ---

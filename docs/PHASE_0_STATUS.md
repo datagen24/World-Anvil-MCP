@@ -236,12 +236,9 @@ None - Ready to start Phase 0.3!
 **Insight**: Article management is the absolute core. Focus Phase 1 heavily on articles.
 
 ### Write API Status
-Workflows identify write operations as "Future (Write API - When Available)":
-- Create/update articles
-- Create categories
-- Create map markers
+Evidence from pywaclient and openapi path patterns indicates base endpoints support CRUD via PUT/PATCH/DELETE with identifiers as query parameters. World-scoped listings commonly use POST with pagination in the body.
 
-**Strategy**: Start with read-only MVP, add write later when API supports it.
+**Strategy**: Implement read and write for core resources (Articles, Categories where available) early, while validating write support per endpoint against live docs.
 
 ### Caching Strategy (From Workflow Analysis)
 - **Session-time priority**: Fast lookups critical during play
@@ -329,8 +326,8 @@ All tasks completed in 2-3 hours (vs 1-2 day estimate):
 - ✅ Workflow uncertainty → Resolved (10 detailed workflows)
 
 ### Current Risks ⚠️
-- ⚠️ World Anvil API write capabilities unknown
-  - Mitigation: Start read-only, add write later
+- ⚠️ World Anvil API write capability coverage varies by resource
+  - Mitigation: Validate per endpoint; ship write for Articles first
 - ⚠️ pywaclient may have undocumented API quirks
   - Mitigation: Study their code carefully
 - ⚠️ Granularity parameter behavior needs validation

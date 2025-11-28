@@ -152,16 +152,15 @@ Based on the OpenAPI 3.0.3 specification in `openapi.yml`, the World Anvil Borom
 ## API Limitations & Unknowns
 
 ### Known Limitations
-- OpenAPI spec shows mostly GET operations
-- Write/Update/Delete operations not fully documented
-- `parts/` directory schemas not available (referenced but missing)
+- `parts/` directory schemas are referenced but not included locally
 - Chronicle endpoints commented out (may be deprecated)
+- Full CRUD shape per resource must be verified against live docs
 
 ### Requires Investigation
-- ❓ Full CRUD support for each resource
-- ❓ Granularity support (0/1/2) for all endpoints
+- ❓ Confirm CRUD support per resource (base endpoints typically support PUT/PATCH/DELETE with `id` query param)
+- ❓ Granularity levels and behavior per endpoint (string param; includes -1..3)
 - ❓ Rate limiting specifics
-- ❓ Pagination patterns
+- ❓ Pagination patterns (world-scoped lists commonly via POST with limit/offset)
 - ❓ Search and filtering capabilities
 - ❓ Webhook/notification support
 - ❓ Bulk operation support

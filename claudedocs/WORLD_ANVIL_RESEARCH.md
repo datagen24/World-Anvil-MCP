@@ -48,32 +48,35 @@ All GET endpoints support a `granularity` parameter:
 | 1 | Standard detail | Most operations |
 | 2 | Full detail | Articles with all content |
 
-### Known Endpoints
+### Known Endpoints (from openapi.yml + pywaclient)
 
 **User/Identity**:
 - `GET /identity` - Current authenticated user
-- `GET /user/{id}` - User details
-- `GET /user/{id}/worlds` - List user's worlds
+- `GET /user` - User details (id via query param)
+- `GET /user/worlds` - List user's worlds
 
 **Worlds**:
-- `GET /world/{id}` - World details
-- `GET /world/{id}/articles` - World's articles
-- `GET /world/{id}/categories` - World's categories
+- `GET /world` - World details (id via query param)
+- `POST /world/articles` - World's articles (pagination via body)
+- `GET /world/categories` - World's categories (id via query param)
 
 **Articles**:
-- `GET /article/{id}` - Article details (granularity 2 for full content)
+- `GET /article` - Article details (id via query param, granularity "2" for full content)
+- `PUT /article` - Create
+- `PATCH /article` - Update (id via query param)
+- `DELETE /article` - Delete (id via query param)
 - Article includes `content` and `content_parsed` fields
 
 **Categories**:
-- `GET /category/{id}` - Category details
-- `GET /category/{id}/articles` - Articles in category
+- `GET /category` - Category details (id via query param)
+- `GET /world/categories` - List categories (id via query param)
 
-### API Limitations
+### API Notes
 
-1. **Currently READ-focused** - Write/edit endpoints in development (Project Oracle)
-2. **Rate limiting** applies
-3. **Non-commercial** use only without authorization
-4. **Grandmaster+** required for application keys
+1. Core base endpoints expose CRUD via header-authenticated PUT/PATCH/DELETE (identifier via query params)
+2. World-scoped listings commonly use POST with body for pagination (`limit`, `offset`)
+3. Rate limiting applies; implement backoff and caching
+4. Grandmaster+ required for application keys; user tokens required for user-level access
 
 ### Documentation Sources
 - API Docs: `https://www.worldanvil.com/api/external/boromir/documentation`
@@ -289,4 +292,3 @@ When Project Oracle completes:
 | Codex (Community) | https://www.worldanvil.com/w/WorldAnvilCodex |
 | Python Client | https://gitlab.com/SoulLink/world-anvil-api-client |
 | Discord | World Anvil Official Discord (#api-development) |
-
