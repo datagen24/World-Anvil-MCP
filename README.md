@@ -17,6 +17,7 @@ This MCP server bridges Claude Code with the World Anvil platform, enabling AI-a
 ## Prerequisites
 
 - Python 3.11+
+- uv (fast Python package manager) — https://docs.astral.sh/uv/
 - World Anvil account with Grandmaster guild membership
 - World Anvil API application key
 - World Anvil user authentication token
@@ -24,14 +25,31 @@ This MCP server bridges Claude Code with the World Anvil platform, enabling AI-a
 ## Installation
 
 ```bash
-# Clone repository
+# Clone repository and enter it
 cd world-anvil
 
-# Install with uv (recommended)
-uv pip install -e .
+# Recommended: create a local virtualenv with uv
+uv venv --python 3.11 .venv
 
-# Or with pip
-pip install -e .
+# Activate the environment
+# macOS/Linux
+source .venv/bin/activate
+# Windows (PowerShell)
+.venv\\Scripts\\Activate.ps1
+
+# Install dependencies (dev extras optional)
+uv pip install -e .[dev]
+
+# Tip: you can also run without activating via uv
+uv run world-anvil-mcp
+```
+
+Without uv:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate    # Windows: .venv\Scripts\Activate.ps1
+pip install -e .[dev]
 ```
 
 ## Configuration

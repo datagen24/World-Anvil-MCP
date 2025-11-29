@@ -457,6 +457,22 @@ docs/pdca/
 
 ### Phase 1 Plan
 
+#### Backlog (Phase 1 Support & Automation)
+
+The following onboarding and CI tasks are tracked under Phase 1:
+
+1. Getting Started Documentation
+   - File: `docs/GETTING_STARTED.md`
+   - Content: uv install, `.venv` creation/activation, `uv pip install -e .[dev]`, common commands (`ruff`, `mypy`, `pytest`, running server), troubleshooting.
+
+2. Getting Started Scripts
+   - `scripts/dev-setup.sh` (bash): create `.venv` with `uv venv`, install dev deps, print activation tips.
+   - `scripts/dev-setup.ps1` (PowerShell): same as above for Windows.
+
+3. CI Workflow (uv-based)
+   - File: `.github/workflows/ci.yml`
+   - Steps: checkout → setup Python 3.11 → install uv → `uv pip install -e .[dev]` → `uv run ruff format --check .` → `uv run ruff check .` → `uv run mypy src` → `uv run pytest --cov=src --cov-report=term-missing`.
+
 #### 1.1 User Endpoints (Days 1-2)
 
 **Plan** (`docs/pdca/user-endpoints/plan.md`):

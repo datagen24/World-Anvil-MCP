@@ -7,6 +7,13 @@
 - Docs and planning in `docs/` and `claudedocs/`; OpenAPI at `openapi.yml`.
 - Configuration via `.env` (see `.env.example`).
 
+## Environment Setup (uv + venv)
+- Install uv (one-time): `curl -LsSf https://astral.sh/uv/install.sh | sh` (or `brew install uv`).
+- Create project-local venv: `uv venv --python 3.11 .venv`.
+- Activate: macOS/Linux `source .venv/bin/activate`; Windows PowerShell `.venv/Scripts/Activate.ps1`.
+- Install dev deps: `uv pip install -e .[dev]`.
+- Tip: Use `uv run <cmd>` to run tools without activating (e.g., `uv run ruff check .`).
+
 ## Build, Test, and Development
 - Create env and install (dev):
   - `uv pip install -e .[dev]` or `pip install -e .[dev]`

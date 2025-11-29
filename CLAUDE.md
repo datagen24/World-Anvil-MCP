@@ -80,6 +80,23 @@ response = await client.post(
 
 ## Development Commands
 
+### Environment Management (uv + venv)
+
+Use a project-local virtual environment at `.venv` managed by uv. Do not use system Python.
+
+```bash
+# Create and activate venv
+uv venv --python 3.11 .venv
+source .venv/bin/activate   # macOS/Linux
+# .venv\Scripts\Activate.ps1  # Windows PowerShell
+
+# Install with dev extras
+uv pip install -e .[dev]
+
+# Optional: run without activation
+uv run ruff check . && uv run mypy src && uv run pytest -q
+```
+
 ### Setup
 
 ```bash
