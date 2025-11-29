@@ -7,7 +7,7 @@
 
 ---
 
-## Hypothesis (仮説)
+## Hypothesis
 
 ### What to Implement
 [Describe the endpoint or feature being implemented]
@@ -22,7 +22,7 @@
 
 ---
 
-## Expected Outcomes (定量的目標)
+## Expected Outcomes
 
 ### Functional Requirements
 - [ ] Feature 1: [Specific capability]
@@ -46,7 +46,7 @@
 
 ---
 
-## Implementation Approach (実装計画)
+## Implementation Approach
 
 ### Step-by-Step Plan
 1. **Define Models** (30 min)
@@ -84,7 +84,7 @@
 
 ---
 
-## Risks & Mitigation (リスク対策)
+## Risks & Mitigation
 
 ### Technical Risks
 | Risk | Impact | Probability | Mitigation Strategy |

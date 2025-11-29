@@ -52,10 +52,13 @@ def convert_md_to_rst(md_file: Path, rst_file: Path) -> bool:
             [
                 "pandoc",
                 str(md_file),
-                "-f", "markdown",
-                "-t", "rst",
+                "-f",
+                "markdown",
+                "-t",
+                "rst",
                 "--wrap=none",  # Don't wrap lines
-                "-o", str(rst_file),
+                "-o",
+                str(rst_file),
             ],
             check=True,
             capture_output=True,

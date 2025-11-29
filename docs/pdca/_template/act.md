@@ -6,7 +6,7 @@
 
 ---
 
-## Action Summary (改善アクション)
+## Action Summary
 
 ### Overall Outcome
 [Brief summary of what was achieved and what needs improvement]
@@ -18,7 +18,7 @@
 
 ---
 
-## Success Pattern Formalization (成功パターン化)
+## Success Pattern Formalization
 
 ### Patterns Worth Extracting
 
@@ -65,7 +65,7 @@ Evidence: [What proved this works]
 
 ---
 
-## Failure Documentation (失敗の記録)
+## Failure Documentation
 
 ### Mistakes to Document
 

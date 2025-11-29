@@ -3,7 +3,7 @@
 This module initializes and runs the FastMCP server with World Anvil integration.
 """
 
-import asyncio
+import json
 import os
 from typing import Any
 
@@ -15,8 +15,7 @@ load_dotenv()
 
 # Initialize FastMCP server
 mcp = FastMCP(
-    "World Anvil Assistant",
-    version="0.1.0",
+    name="World Anvil Assistant",
 )
 
 
@@ -35,8 +34,7 @@ async def get_api_status() -> dict[str, Any]:
         "has_app_key": bool(app_key),
         "has_user_token": bool(user_token),
         "api_base": os.getenv(
-            "WORLD_ANVIL_API_BASE",
-            "https://www.worldanvil.com/api/external/boromir"
+            "WORLD_ANVIL_API_BASE", "https://www.worldanvil.com/api/external/boromir"
         ),
     }
 
@@ -48,8 +46,6 @@ def get_config_status() -> str:
     Returns:
         JSON string with configuration details
     """
-    import json
-
     app_key = os.getenv("WORLD_ANVIL_APP_KEY")
     user_token = os.getenv("WORLD_ANVIL_USER_TOKEN")
 
@@ -58,8 +54,7 @@ def get_config_status() -> str:
         "version": "0.1.0",
         "configured": bool(app_key and user_token),
         "api_base": os.getenv(
-            "WORLD_ANVIL_API_BASE",
-            "https://www.worldanvil.com/api/external/boromir"
+            "WORLD_ANVIL_API_BASE", "https://www.worldanvil.com/api/external/boromir"
         ),
     }
 

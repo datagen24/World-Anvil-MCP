@@ -59,6 +59,7 @@ async def test_example_integration():
     Note: This is a placeholder. Real integration tests will use respx
     to mock httpx requests during Phase 1 implementation.
     """
+
     # Example: Test async operation
     async def async_operation():
         return "success"

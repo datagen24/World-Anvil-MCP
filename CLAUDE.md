@@ -344,18 +344,129 @@ Get credentials from: https://www.worldanvil.com/api-keys
 
 ---
 
+## Quality Gate Integration (MANDATORY)
+
+### Before Marking Tasks Complete
+
+**CRITICAL**: ALWAYS run quality gates before marking TodoWrite items "completed":
+
+```bash
+# Quality gate validation (activate venv first)
+source .venv/bin/activate
+
+# 1. Type Coverage (mypy strict)
+python -m mypy src/
+# Expected: Success: no issues found in N source files
+
+# 2. Code Quality (ruff)
+ruff check src/
+# Expected: All checks passed!
+
+# 3. Formatting (ruff)
+ruff format --check .
+# Expected: All files formatted correctly
+
+# 4. Tests (pytest)
+pytest -q
+# Expected: N passed, M skipped (100% pass rate)
+
+# 5. Coverage (for implemented components)
+pytest --cov=src --cov-report=term-missing
+# Expected: ≥90% for Days 1-4 components
+
+# ALL must pass before marking "completed"
+```
+
+**Rationale**: Prevents backtracking to fix quality issues later. Early validation = cheaper fixes.
+
+**Evidence**: Phase 1.1 marked "complete" prematurely → 1.5 hours lost fixing 29 violations.
+
+---
+
+## Sub-Agent Output Validation
+
+### After Sub-Agent Code Generation
+
+Sub-agents accelerate development but require language-specific validation BEFORE accepting output:
+
+**Python Validation Checklist**:
+- [ ] Class methods have `self` parameter
+- [ ] Type hints present (mypy strict compliance)
+- [ ] Pydantic v2 validation (no auto-coercion assumptions)
+- [ ] Docstrings follow Google style
+- [ ] Tests use correct patterns (Arrange-Act-Assert)
+
+**All Languages**:
+- [ ] Run formatter before accepting
+- [ ] Run linter before accepting
+- [ ] Run type checker before accepting
+- [ ] Verify tests pass
+
+**Validation Pattern**:
+```bash
+# After sub-agent completes
+source .venv/bin/activate
+ruff format . && ruff check src/ && mypy src/ && pytest -q
+
+# ONLY accept output if all pass
+```
+
+**Rationale**: Sub-agents optimize for speed. Validation ensures quality.
+
+**Evidence**: Phase 1.1 sub-agent generated 184 tests without `self` parameter → automated fix required.
+
+---
+
+## Environment Setup Protocol (MANDATORY)
+
+### Package Installation Verification
+
+ALWAYS verify uv/venv before installing packages:
+
+```bash
+# 1. Verify uv installed
+which uv && uv --version
+
+# 2. Verify venv exists
+test -d .venv && echo "✅ venv exists" || echo "❌ Create venv first"
+
+# 3. Activate venv
+source .venv/bin/activate   # macOS/Linux
+# .venv\Scripts\Activate.ps1  # Windows
+
+# 4. Install packages with uv
+uv pip install <package>
+
+# 5. Verify installation
+python -c "import <package>; print('✅ Installed')"
+```
+
+**Never** install to system Python. Always use project-local venv at `.venv`.
+
+**Rationale**: Prevents environment pollution and "wrong Python" errors.
+
+---
+
 ## Current Phase Status
 
-**Phase 0.4**: Early Implementation (scaffolding + quality gates)
-- ✅ Architecture designed and reviewed
-- ✅ Specifications drafted (`docs/specs/`), workflows authored (`docs/workflows/`)
-- ✅ Quality gates configured (ruff, mypy strict, pytest)
-- ⏳ Initial endpoints and models under implementation
-- ⏳ Pre-commit hooks and broader test suite
+**Phase 1.1 (Days 1-4)**: ✅ Complete - Foundation & Initial API
+- ✅ CI/CD Pipeline (GitHub Actions with 7 quality gates)
+- ✅ WorldAnvilClient (async context manager with retry logic)
+- ✅ InMemoryCache (TTL + LRU eviction)
+- ✅ Exception Hierarchy (6 exception classes with attributes)
+- ✅ EcosystemDetector (MCP companion integration)
+- ✅ Pydantic Models (Identity, User, World, WorldSummary)
+- ✅ MCP Tools (5 tools: user identity, user profile, world list/get/update)
+- ✅ Unit Tests (225 tests passing, ~100% coverage for Days 1-4 components)
+- ✅ Quality Gates (100% type coverage, 0 violations, 100% pass rate)
 
-Coverage targets: ≥85% overall, ≥90% for core client modules.
+**Phase 1.1 (Days 5-6)**: ⏳ Next - Write API Validation + Integration Tests
+- ⏳ Write operations (PATCH, DELETE endpoints)
+- ⏳ Integration tests for client/server/tools
+- ⏳ Live API validation
 
-See `docs/PHASE_0_STATUS.md` for granular progress and milestones.
+Coverage achieved: 43.68% overall (Days 1-4 components at ~100%)
+See `docs/pdca/phase-1.1-foundation/` for detailed PDCA documentation.
 
 ---
 

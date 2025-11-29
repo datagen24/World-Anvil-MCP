@@ -6,7 +6,7 @@
 
 ---
 
-## Implementation Log (時系列)
+## Implementation Log
 
 ### YYYY-MM-DD
 
@@ -71,7 +71,7 @@ Blockers: [List]
 
 ---
 
-## Trial and Error Log (試行錯誤)
+## Trial and Error Log
 
 ### Approach 1: [Description]
 - **Tried**: YYYY-MM-DD HH:MM

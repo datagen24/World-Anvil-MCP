@@ -137,9 +137,7 @@ def has_live_credentials() -> bool:
         bool: True if both WORLD_ANVIL_API_KEY and WORLD_ANVIL_USER_TOKEN
             environment variables are set.
     """
-    return bool(
-        os.getenv("WORLD_ANVIL_API_KEY") and os.getenv("WORLD_ANVIL_USER_TOKEN")
-    )
+    return bool(os.getenv("WORLD_ANVIL_API_KEY") and os.getenv("WORLD_ANVIL_USER_TOKEN"))
 
 
 @pytest.fixture

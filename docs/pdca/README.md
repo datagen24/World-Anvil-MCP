@@ -10,10 +10,10 @@ This directory contains PDCA (Plan-Do-Check-Act) documentation for the World Anv
 
 **PDCA** (Plan-Do-Check-Act) is a four-step iterative cycle for continuous improvement:
 
-1. **Plan (仮説)**: Define hypothesis, goals, and approach
-2. **Do (実験)**: Execute the plan, document trial-and-error
-3. **Check (評価)**: Evaluate results against expectations
-4. **Act (改善)**: Formalize successes, prevent mistakes
+1. **Plan**: Define hypothesis, goals, and approach
+2. **Do**: Execute the plan, document trial-and-error
+3. **Check**: Evaluate results against expectations
+4. **Act**: Formalize successes, prevent mistakes
 
 ### Why PDCA for Software Development?
 
@@ -55,7 +55,7 @@ docs/pdca/
 
 ## PDCA Workflow
 
-### Phase 1: Plan (仮説)
+### Phase 1: Plan
 
 **Purpose**: Define hypothesis and implementation approach
 
@@ -81,7 +81,7 @@ Expected: [Metrics]
 
 ---
 
-### Phase 2: Do (実験)
+### Phase 2: Do
 
 **Purpose**: Execute plan and document trial-and-error
 
@@ -119,7 +119,7 @@ write_memory("session/checkpoint", current_state)
 
 ---
 
-### Phase 3: Check (評価)
+### Phase 3: Check
 
 **Purpose**: Evaluate results against expectations
 
@@ -152,7 +152,7 @@ Learnings: [Key insights]
 
 ---
 
-### Phase 4: Act (改善)
+### Phase 4: Act
 
 **Purpose**: Formalize successes and prevent mistakes
 
@@ -167,7 +167,7 @@ Learnings: [Key insights]
 **Success Path**:
 ```
 Feature succeeded →
-  1. Create docs/patterns/[feature].md (清書)
+  1. Create docs/patterns/[feature].md
   2. Update CLAUDE.md with best practices
   3. Add to quality checklists
   4. Write memory for reuse
@@ -210,17 +210,17 @@ session/:
   session/checkpoint     # Progress snapshots (30-min intervals)
 
 plan/:
-  plan/[feature]/hypothesis     # Plan phase: 仮説・設計
+  plan/[feature]/hypothesis     # Plan phase:
   plan/[feature]/architecture   # Architecture decisions
   plan/[feature]/rationale      # Why this approach
 
 execution/:
-  execution/[feature]/do        # Do phase: 実験・試行錯誤
+  execution/[feature]/do        # Do phase:
   execution/[feature]/errors    # Error log with timestamps
   execution/[feature]/solutions # Solution attempts log
 
 evaluation/:
-  evaluation/[feature]/check    # Check phase: 評価・分析
+  evaluation/[feature]/check    # Check phase:
   evaluation/[feature]/metrics  # Quality metrics
   evaluation/[feature]/lessons  # What worked, what failed
 
@@ -285,18 +285,18 @@ The PDCA system is deeply integrated with the PM Agent self-improvement workflow
 ```yaml
 1. Error Occurs:
    → STOP: Never re-execute same command
-   → Question: "なぜこのエラーが出たのか？"
+   → Question:
 
 2. Root Cause Investigation (MANDATORY):
    - context7: Official documentation research
    - WebFetch: Community solutions (Stack Overflow, GitHub)
    - Grep: Codebase pattern analysis
    - Read: Related files inspection
-   → Document: "原因は[X]。根拠: [Y]"
+   → Document:
 
 3. Hypothesis Formation:
-   - State: "原因は[X]。解決策: [Z]"
-   - Rationale: "なぜこの方法なら解決するか"
+   - State:
+   - Rationale:
 
 4. Solution Design (MUST BE DIFFERENT):
    - Previous Approach A failed → Design Approach B

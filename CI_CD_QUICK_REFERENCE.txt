@@ -1,0 +1,289 @@
+================================================================================
+                    CI/CD PIPELINE QUICK REFERENCE
+================================================================================
+
+GITHUB ACTIONS WORKFLOW
+  Location: .github/workflows/ci.yml
+  Triggers: Push to main, Pull requests to main
+  Python: 3.11 (project requirement)
+  Status: PRODUCTION READY
+
+================================================================================
+                         QUALITY GATES (7)
+================================================================================
+
+1. FORMAT CHECK
+   Command: ruff format --check .
+   Auto-fix: ruff format .
+
+2. LINT CHECK
+   Command: ruff check .
+   Auto-fix: ruff check . --fix
+
+3. TYPE CHECK
+   Command: mypy src/world_anvil_mcp
+   Mode: STRICT (all functions must be typed)
+
+4. TEST EXECUTION
+   Command: pytest --cov=src/world_anvil_mcp --cov-fail-under=85
+   Coverage minimum: 85% (enforced)
+
+5. COVERAGE REPORTING
+   Service: Codecov (codecov.io)
+   Token: CODECOV_TOKEN (repository secret)
+
+6. PR COMMENTS
+   Shows: Coverage %, changes, missing lines
+   Only on: Pull requests
+
+================================================================================
+                      LOCAL DEVELOPMENT (MAKE)
+================================================================================
+
+make check             All quality gates
+make format            Auto-format code
+make lint              Lint and auto-fix
+make typecheck         Type check
+make test              Run all tests
+make test-cov          Tests with coverage
+make test-unit         Fast unit tests only
+make clean             Cleanup artifacts
+
+================================================================================
+                     BEFORE PUSHING CODE
+================================================================================
+
+1. Run locally:
+   make check
+
+2. Or manually:
+   ruff format . && ruff check . && mypy src/world_anvil_mcp && pytest
+
+3. If anything fails:
+   - Format: ruff format .
+   - Lint: ruff check . --fix
+   - Type: Fix manually (add type hints)
+   - Tests: pytest -v (debug locally)
+
+================================================================================
+                   GITHUB SETUP (ONE-TIME)
+================================================================================
+
+1. Add Codecov Token (REQUIRED)
+   Go to: Repository → Settings → Secrets and variables → Actions
+   Create secret: CODECOV_TOKEN
+   Value: Get from https://codecov.io/repositories
+
+2. Test Workflow
+   Create branch: git checkout -b test/ci
+   Push and create PR
+   Watch Actions tab (2-3 minutes)
+   Verify all gates pass
+
+3. Optional: Branch Protection
+   Go to: Repository → Settings → Branches
+   Add rule for main
+   Require "CI / test" status check
+
+================================================================================
+                      WORKFLOW EXECUTION
+================================================================================
+
+[1] Checkout code
+[2] Setup Python 3.11 + pip cache
+[3] Install uv package manager
+[4] Install dependencies (dev + test)
+[5] Format check (ruff)
+[6] Lint check (ruff)
+[7] Type check (mypy strict)
+[8] Test execution (pytest with coverage ≥85%)
+[9] Upload test results (always)
+[10] Upload coverage (Codecov)
+[11] Comment PR with coverage (if PR)
+
+FAIL: Stops at first gate failure
+PASS: All 11 steps complete
+
+================================================================================
+                       EXPECTED DURATION
+================================================================================
+
+First run:   2-3 minutes (dependencies install)
+Normal run:  1-2 minutes (dependencies cached)
+
+Breakdown:
+  Setup:           30 seconds
+  Quality checks:  30 seconds
+  Tests:         30-60 seconds
+  Upload/report:   10 seconds
+
+================================================================================
+                    TROUBLESHOOTING
+================================================================================
+
+CI passes locally but fails in GitHub?
+  → Check Python version: python --version (should be 3.11.x)
+  → Check dependencies: uv pip install -e ".[dev,test]"
+  → Run exact same commands as workflow
+
+Tests pass locally but fail in GitHub?
+  → Run: pytest -v (same as CI)
+  → Check for Windows/Unix path issues
+  → Check for missing environment variables
+
+Coverage below 85%?
+  → Run: pytest --cov-report=term-missing
+  → Add tests for missing lines
+  → Check pyproject.toml coverage.run.omit
+
+Type check fails?
+  → Run: mypy src/world_anvil_mcp
+  → Add type hints: def foo(x: str) -> str:
+  → Use: from typing import ...
+
+Codecov upload fails?
+  → Check CODECOV_TOKEN exists in secrets
+  → Regenerate token at codecov.io
+  → Update repository secret
+
+================================================================================
+                      DOCUMENTATION
+================================================================================
+
+CI_CD_PIPELINE.md           Complete guide (400+ lines)
+DEVELOPMENT_QUICK_START.md  Quick setup (200+ lines)
+WORKFLOW_REFERENCE.md       Line-by-line explanation (300+ lines)
+CI_CD_SETUP_CHECKLIST.md    Verification guide (400+ lines)
+IMPLEMENTATION_SUMMARY.md   Implementation details (300+ lines)
+
+================================================================================
+                      CONFIGURATION FILES
+================================================================================
+
+pyproject.toml
+  [tool.ruff.format]        - Code style (line length, quotes)
+  [tool.ruff.lint]          - 25+ lint rules
+  [tool.mypy]               - Strict type checking
+  [tool.pytest.ini_options] - Test configuration
+  [tool.coverage.run]       - Coverage settings
+
+Makefile
+  make targets for all quality checks
+
+.github/workflows/ci.yml
+  GitHub Actions workflow (this is what runs)
+
+================================================================================
+                      KEY METRICS
+================================================================================
+
+Code Coverage Minimum: 85%
+Type Coverage: 100% (mypy strict)
+Format: Line length 100, double quotes
+Linting Rules: 25+ categories enabled
+Test Timeout: 30 seconds per test
+Workflow Timeout: 30 minutes
+
+================================================================================
+                      QUICK COMMANDS
+================================================================================
+
+Format code:
+  ruff format .
+
+Check formatting:
+  ruff format --check .
+
+Lint with auto-fix:
+  ruff check . --fix
+
+Type check:
+  mypy src/world_anvil_mcp
+
+Run all tests:
+  pytest
+
+Run tests with coverage:
+  pytest --cov=src/world_anvil_mcp --cov-fail-under=85
+
+Run unit tests only (fast):
+  pytest -m unit
+
+Run specific test:
+  pytest tests/test_client.py::test_name
+
+Debug on failure:
+  pytest --pdb
+
+Show missing coverage lines:
+  pytest --cov-report=term-missing
+
+Run all quality checks:
+  make check
+
+Create feature branch:
+  git checkout -b feature/name
+
+Push and create PR:
+  git push origin feature/name
+
+================================================================================
+                      ARTIFACT LOCATIONS
+================================================================================
+
+Test Results: test-results.xml
+Coverage Report: coverage.xml
+HTML Coverage: htmlcov/index.html (local only)
+
+In GitHub Actions:
+  Actions tab → Run → Artifacts → test-results
+
+In Codecov:
+  codecov.io/repositories → Coverage dashboard
+
+On Pull Request:
+  Automatic coverage comment (refresh PR page)
+
+================================================================================
+                      STATUS CHECK
+================================================================================
+
+Before pushing:
+  [ ] make check passes
+  [ ] Coverage ≥85%
+  [ ] Type check passes
+  [ ] All tests pass
+
+Before merging PR:
+  [ ] All 7 CI gates pass (green checkmarks)
+  [ ] Coverage comment shows ≥85%
+  [ ] Code review approved
+
+Before deploying:
+  [ ] Latest commit on main has CI passing
+  [ ] Coverage on main ≥85%
+  [ ] Documentation updated
+
+================================================================================
+                      SUPPORT
+================================================================================
+
+Documentation:
+  docs/CI_CD_PIPELINE.md - Full documentation
+
+Reference:
+  WORKFLOW_REFERENCE.md - Line-by-line explanation
+
+Checklist:
+  CI_CD_SETUP_CHECKLIST.md - Setup verification
+
+External:
+  GitHub Actions: https://docs.github.com/en/actions
+  Ruff: https://docs.astral.sh/ruff/
+  Mypy: https://mypy.readthedocs.io/
+  Pytest: https://docs.pytest.org/
+  Codecov: https://docs.codecov.io/
+
+================================================================================
+Last Updated: 2025-11-29
+Status: Production Ready

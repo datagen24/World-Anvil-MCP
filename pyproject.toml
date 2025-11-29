@@ -129,16 +129,15 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 minversion = "8.0"
-asyncio_mode = "auto"
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-timeout = 30
 markers = [
     "unit: Unit tests (fast, no I/O)",
-    "integration: Integration tests (may use network)",
-    "e2e: End-to-end tests (require live API)",
+    "integration: Integration tests (mocked HTTP)",
+    "e2e: End-to-end tests (live API)",
+    "asyncio: Async test marker",
     "slow: Tests that take >1 second",
 ]
 addopts = [

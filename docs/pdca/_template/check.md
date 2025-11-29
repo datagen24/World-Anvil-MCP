@@ -6,7 +6,7 @@
 
 ---
 
-## Results vs Expectations (評価)
+## Results vs Expectations
 
 ### Functional Requirements
 
@@ -72,7 +72,7 @@ TOTAL                                     225     13    94%
 
 ---
 
-## What Worked Well (成功パターン)
+## What Worked Well
 
 ### Technical Successes
 1. **[Success 1]**
@@ -105,7 +105,7 @@ TOTAL                                     225     13    94%
 
 ---
 
-## What Failed / Challenges (失敗・課題)
+## What Failed / Challenges
 
 ### Technical Failures
 1. **[Failure 1]**
@@ -137,7 +137,7 @@ TOTAL                                     225     13    94%
 
 ---
 
-## Hypothesis Validation (仮説の検証)
+## Hypothesis Validation
 
 ### Original Hypothesis
 > [Quote from plan.md]
@@ -223,7 +223,7 @@ test_create_article: 280ms (target: <500ms) ✅
 
 ---
 
-## Learnings Summary (学び)
+## Learnings Summary
 
 ### Top 3 Technical Learnings
 1. **[Learning 1]**: [Explanation and application]

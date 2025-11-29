@@ -356,14 +356,14 @@ docs/pdca/
 
    ## For Each Endpoint Group
 
-   ### Plan (仮説)
+   ### Plan
    1. Create docs/pdca/[endpoint-group]/plan.md
    2. Define hypothesis: What to implement, why this approach
    3. Set success criteria (coverage, performance, errors)
    4. Identify risks and mitigation strategies
    5. write_memory("plan/[endpoint]/hypothesis", plan)
 
-   ### Do (実験)
+   ### Do
    1. Create docs/pdca/[endpoint-group]/do.md
    2. Implement with continuous logging:
       - Timestamp each step
@@ -373,7 +373,7 @@ docs/pdca/
    3. write_memory("execution/[endpoint]/do", experiment_log)
    4. Update do.md in real-time during implementation
 
-   ### Check (評価)
+   ### Check
    1. Create docs/pdca/[endpoint-group]/check.md
    2. Compare results vs expectations:
       - Test coverage achieved vs target
@@ -382,7 +382,7 @@ docs/pdca/
    3. What worked well / what failed
    4. write_memory("evaluation/[endpoint]/check", analysis)
 
-   ### Act (改善)
+   ### Act
    1. Create docs/pdca/[endpoint-group]/act.md
    2. Success → Formalize pattern:
       - Move to docs/patterns/[pattern-name].md
@@ -826,7 +826,7 @@ pytest --cov=world_anvil_mcp --cov-report=term
 
 ### Per-Endpoint PDCA Cycle
 
-#### Plan (仮説)
+#### Plan
 ```yaml
 Create: docs/pdca/[endpoint-name]/plan.md
 
@@ -839,7 +839,7 @@ Contents:
 Memory: write_memory("plan/[endpoint]/hypothesis", plan_doc)
 ```
 
-#### Do (実験)
+#### Do
 ```yaml
 Create: docs/pdca/[endpoint-name]/do.md
 
@@ -854,7 +854,7 @@ Memory: write_memory("execution/[endpoint]/do", experiment_log)
 Update Continuously: Log as you implement, not after
 ```
 
-#### Check (評価)
+#### Check
 ```yaml
 Create: docs/pdca/[endpoint-name]/check.md
 
@@ -867,7 +867,7 @@ Contents:
 Memory: write_memory("evaluation/[endpoint]/check", analysis)
 ```
 
-#### Act (改善)
+#### Act
 ```yaml
 Create: docs/pdca/[endpoint-name]/act.md
 
@@ -984,7 +984,7 @@ Memory:
 6. **Verify** - Did root cause get fixed?
 7. **Learn** - Update patterns or mistakes docs
 
-**Anti-Pattern** (禁止):
+**Anti-Pattern**:
 - ❌ "Error occurred, trying again..."
 - ❌ "Timeout, increasing wait time" (without root cause)
 - ❌ "Warning but works, ignoring" (dismissing signals)
